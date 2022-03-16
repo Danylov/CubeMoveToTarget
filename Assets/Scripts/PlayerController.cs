@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
         }
         if (movePlayer == 10)
         {
-            if (movePlayer_x == 0)
+            if (movePlayer_x == 2)
             {
                 endPos = initPlayerPos;
                 currTime = 0.0f;
@@ -42,7 +42,8 @@ public class PlayerController : MonoBehaviour
         {
             transform.position = endPos;
             transform.rotation = Quaternion.identity;
-            movePlayer = 0;
+            if (movePlayer == 1) movePlayer = 2;
+            if (movePlayer == 10) movePlayer = 0;
         }
     }
 }

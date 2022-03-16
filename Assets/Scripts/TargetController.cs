@@ -13,7 +13,7 @@ public class TargetController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && (playerController.movePlayer == 2))
         {
             playerController.startPos = playerController.endPos;
             playerController.movePlayer = 10;
@@ -22,21 +22,10 @@ public class TargetController : MonoBehaviour
 
     void OnMouseOver()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && (playerController.movePlayer == 0))
         {
             playerController.endPos = transform.position;
             playerController.movePlayer = 1;
         }
     }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Player")) Debug.Log("Target has collided with player.");
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player")) Debug.Log("Target has triggered with player.");
-    }
-
 }
