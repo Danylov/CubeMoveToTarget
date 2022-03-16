@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class TargetController : MonoBehaviour
 {
@@ -10,13 +11,22 @@ public class TargetController : MonoBehaviour
         playerController = player.gameObject.GetComponent<PlayerController>();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            playerController.startPos = playerController.endPos;
+            playerController.movePlayer = 10;
+        }
+    }
+
     void OnMouseOver()
     {
         if (Input.GetMouseButtonDown(0))
         {
             playerController.endPos = transform.position;
             playerController.movePlayer = 1;
-        }   
+        }
     }
 
     private void OnCollisionEnter(Collision collision)

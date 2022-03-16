@@ -1,37 +1,37 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public int movePlayer_x = 0;
-    public int movePlayer = 0;
-    private float currTime = 0.0f;
+    public int movePlayer_x, movePlayer;
+    private float currTime;
     public float moveTime = 3.0f;
-    private Vector3 startPos;
-    public Vector3 endPos;
+    private readonly Vector3 initPlayerPos = new Vector3(0.0f, 8.0f, 0.0f);
+    public Vector3 startPos, endPos;
     
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
     void Update()
     {
         if (movePlayer == 1)
         {
             if (movePlayer_x == 0)
             {
-                startPos = transform.position;
+                startPos = initPlayerPos;
                 currTime = 0.0f;
             }
-            MovePlayerToTarget();
+            MovePlayer();
+        }
+        if (movePlayer == 10)
+        {
+            if (movePlayer_x == 0)
+            {
+                endPos = initPlayerPos;
+                currTime = 0.0f;
+            }
+            MovePlayer();
         }
         movePlayer_x = movePlayer;
     }
 
-    public void MovePlayerToTarget()
+    public void MovePlayer()
     {
         if (currTime < moveTime) {
             transform.position = Vector3.Slerp(startPos, endPos, currTime/moveTime);
