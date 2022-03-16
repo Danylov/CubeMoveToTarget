@@ -5,46 +5,44 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private float speed = 100.0f;
-    private float zBound = 9;
-    private Rigidbody playerRb;
+    public int movePlayer_x = 0;
+    public int movePlayer = 0;
+    private float currTime = 0.0f;
+    public float moveTime = 3.0f;
+    private Vector3 startPos;
+    public Vector3 endPos;
     
     void Start()
     {
-        playerRb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        MovePlayer();
-        ConstrainPlayerPosition();
-    }
-
-    void MovePlayer()
-    {
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
-        playerRb.AddForce(speed * verticalInput * Vector3.forward);
-        playerRb.AddForce(speed * horizontalInput * Vector3.right);
-    }
-
-    void ConstrainPlayerPosition()
-    {
-        if (zBound < Math.Abs(transform.position.z))
+        if (movePlayer == 1)
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y,
-                zBound * Math.Sign(transform.position.z));
+            if (movePlayer_x == 0)
+            {
+                startPos = transform.position;
+                currTime = 0.0f;
+            }
+            MovePlayerToTarget();
         }
+        movePlayer_x = movePlayer;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    public void MovePlayerToTarget()
     {
-        if (collision.gameObject.CompareTag("Enemy")) Debug.Log("Player has collided with enemy.");
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Powerup")) Destroy(other.gameObject);
+        if (currTime < moveTime) {
+            transform.position = Vector3.Slerp(startPos, endPos, currTime/moveTime);
+            transform.Rotate(new Vector3(0, 90, 0) * Time.deltaTime);
+            currTime += Time.deltaTime;
+        }
+        else
+        {
+            transform.position = endPos;
+            transform.rotation = Quaternion.identity;
+            movePlayer = 0;
+        }
     }
 }
