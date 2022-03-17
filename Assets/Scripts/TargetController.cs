@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class TargetController : MonoBehaviour
 {
@@ -13,19 +12,11 @@ public class TargetController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && (playerController.movePlayer == 2))
-        {
-            playerController.startPos = playerController.endPos;
-            playerController.movePlayer = 10;
-        }
+        if (Input.GetKeyDown(KeyCode.Space)) playerController.ClickSpace();
     }
 
     void OnMouseOver()
     {
-        if (Input.GetMouseButtonDown(0) && (playerController.movePlayer == 0))
-        {
-            playerController.endPos = transform.position;
-            playerController.movePlayer = 1;
-        }
+        if (Input.GetMouseButtonDown(0)) playerController.TargetMouseOver(gameObject);
     }
 }
